@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="101" id="KGk-i7-Jjw" customClass="SingleRepCell" customModule="Reps" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="328" height="101"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="328" height="101"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7tY-L9-hDi">
+                        <rect key="frame" x="0.0" y="0.0" width="328" height="101"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oYK-8t-r4a" userLabel="Workout Name Cell">
+                                <rect key="frame" x="0.0" y="0.0" width="328" height="51"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WorkoutType" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3E-Oq-Cxh">
+                                        <rect key="frame" x="8" y="4" width="320" height="41"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="U3E-Oq-Cxh" secondAttribute="bottom" constant="6" id="95Y-Uc-QNt"/>
+                                    <constraint firstAttribute="width" constant="328" id="PsM-FU-hf6"/>
+                                    <constraint firstAttribute="trailing" secondItem="U3E-Oq-Cxh" secondAttribute="trailing" id="Zfz-kl-XCw"/>
+                                    <constraint firstItem="U3E-Oq-Cxh" firstAttribute="leading" secondItem="oYK-8t-r4a" secondAttribute="leading" constant="8" id="qtT-MS-pwD"/>
+                                    <constraint firstItem="U3E-Oq-Cxh" firstAttribute="top" secondItem="oYK-8t-r4a" secondAttribute="top" constant="4" id="urM-go-v9T"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIp-Q3-jfK" userLabel="Workout Detail Cell">
+                                <rect key="frame" x="0.0" y="51" width="328" height="50"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scalemass.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="6Pr-3E-385">
+                                        <rect key="frame" x="8.0000000000000018" y="6.3333333333333304" width="20.666666666666671" height="19.666666666666657"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20.670000000000002" id="tTb-uj-RsF"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weights" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20x-sm-6OW">
+                                        <rect key="frame" x="36" y="7" width="55.666666666666657" height="18"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="20x-sm-6OW" secondAttribute="bottom" constant="25" id="0K3-kS-kSP"/>
+                                    <constraint firstItem="6Pr-3E-385" firstAttribute="top" secondItem="sIp-Q3-jfK" secondAttribute="top" constant="6" id="6k3-3m-YjB"/>
+                                    <constraint firstItem="20x-sm-6OW" firstAttribute="leading" secondItem="6Pr-3E-385" secondAttribute="trailing" constant="7.3300000000000001" id="7t8-MW-1Ip"/>
+                                    <constraint firstAttribute="width" constant="328" id="L8L-WO-ihS"/>
+                                    <constraint firstAttribute="trailing" secondItem="20x-sm-6OW" secondAttribute="trailing" constant="236.33000000000001" id="dPd-3C-UyG"/>
+                                    <constraint firstAttribute="bottom" secondItem="6Pr-3E-385" secondAttribute="bottom" constant="23.670000000000002" id="djb-bQ-kz0"/>
+                                    <constraint firstItem="20x-sm-6OW" firstAttribute="top" secondItem="sIp-Q3-jfK" secondAttribute="top" constant="7" id="gDJ-WW-owX"/>
+                                    <constraint firstItem="20x-sm-6OW" firstAttribute="leading" secondItem="6Pr-3E-385" secondAttribute="trailing" constant="7.3300000000000001" id="gvv-4c-nSP"/>
+                                    <constraint firstItem="6Pr-3E-385" firstAttribute="leading" secondItem="sIp-Q3-jfK" secondAttribute="leading" constant="8" id="zWC-bM-9Pu"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="328" id="BRJ-Kq-w1y"/>
+                            <constraint firstAttribute="trailing" secondItem="sIp-Q3-jfK" secondAttribute="trailing" id="aBE-JO-kFQ"/>
+                            <constraint firstItem="oYK-8t-r4a" firstAttribute="leading" secondItem="7tY-L9-hDi" secondAttribute="leading" id="opD-yo-Mmi"/>
+                            <constraint firstAttribute="height" constant="101" id="pjs-y5-3yl"/>
+                            <constraint firstItem="oYK-8t-r4a" firstAttribute="leading" secondItem="7tY-L9-hDi" secondAttribute="leading" id="sdf-nE-VgY"/>
+                            <constraint firstAttribute="trailing" secondItem="oYK-8t-r4a" secondAttribute="trailing" id="tcw-dO-zev"/>
+                            <constraint firstItem="sIp-Q3-jfK" firstAttribute="leading" secondItem="7tY-L9-hDi" secondAttribute="leading" id="ttN-Wn-idq"/>
+                            <constraint firstAttribute="trailing" secondItem="oYK-8t-r4a" secondAttribute="trailing" id="tvp-yG-Dm5"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="7tY-L9-hDi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5ZL-ab-kwA"/>
+                    <constraint firstAttribute="trailing" secondItem="7tY-L9-hDi" secondAttribute="trailing" id="SoS-qd-acc"/>
+                    <constraint firstItem="7tY-L9-hDi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="gDM-8W-x3j"/>
+                    <constraint firstAttribute="bottom" secondItem="7tY-L9-hDi" secondAttribute="bottom" id="nMR-GT-EdZ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="weightImageView" destination="6Pr-3E-385" id="3wl-Lb-8Ax"/>
+                <outlet property="workoutDetailCell" destination="sIp-Q3-jfK" id="n4G-zN-Yaj"/>
+                <outlet property="workoutName" destination="U3E-Oq-Cxh" id="c3W-ma-DI7"/>
+                <outlet property="workoutNameCell" destination="oYK-8t-r4a" id="VZC-oq-rwT"/>
+                <outlet property="workoutWeight" destination="20x-sm-6OW" id="xt2-tv-hDp"/>
+            </connections>
+            <point key="canvasLocation" x="143.5114503816794" y="39.7887323943662"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="scalemass.fill" catalog="system" width="128" height="121"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
