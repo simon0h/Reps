@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		290044DA2B8AF67D00C1CA1E /* CellManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290044D92B8AF67D00C1CA1E /* CellManager.swift */; };
 		2983762E2B6617E8007A2434 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2983762D2B6617E8007A2434 /* AppDelegate.swift */; };
 		298376302B6617E8007A2434 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2983762F2B6617E8007A2434 /* SceneDelegate.swift */; };
 		298376322B6617E8007A2434 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298376312B6617E8007A2434 /* ViewController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		290044D92B8AF67D00C1CA1E /* CellManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellManager.swift; sourceTree = "<group>"; };
 		2983762A2B6617E8007A2434 /* Reps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2983762D2B6617E8007A2434 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2983762F2B6617E8007A2434 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,7 +68,6 @@
 			children = (
 				2983762D2B6617E8007A2434 /* AppDelegate.swift */,
 				2983762F2B6617E8007A2434 /* SceneDelegate.swift */,
-				298376312B6617E8007A2434 /* ViewController.swift */,
 				2983764C2B6633CE007A2434 /* Constants.swift */,
 				298376332B6617E8007A2434 /* Main.storyboard */,
 				298376432B661C40007A2434 /* Models */,
@@ -83,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				2983764A2B663270007A2434 /* Workout.swift */,
+				290044D92B8AF67D00C1CA1E /* CellManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -99,6 +101,7 @@
 		298376452B661C5A007A2434 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				298376312B6617E8007A2434 /* ViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 				2983762E2B6617E8007A2434 /* AppDelegate.swift in Sources */,
 				298376302B6617E8007A2434 /* SceneDelegate.swift in Sources */,
 				2983764B2B663270007A2434 /* Workout.swift in Sources */,
+				290044DA2B8AF67D00C1CA1E /* CellManager.swift in Sources */,
 				298376482B661D38007A2434 /* SingleRepCell.swift in Sources */,
 				2983764D2B6633CE007A2434 /* Constants.swift in Sources */,
 			);
