@@ -8,6 +8,6 @@
 import Foundation
 
 struct Workout {
-    let workoutName: String
-    let workoutWeight: Int
+    var workoutName: String
+    var workoutWeight: Int
 }

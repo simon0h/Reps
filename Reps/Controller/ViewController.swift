@@ -36,23 +36,15 @@ class ViewController: UIViewController {
     }
     
     @objc func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
-        // Get location of swipe
-        let location = sender.location(in: workoutTableView)
-        
-        // Get indexPath of cell at swipe location
-        if let indexPath = workoutTableView.indexPathForRow(at: location) {
-            // Perform actions based on indexPath
+        let swipedAtRow = sender.location(in: workoutTableView)
+        if let indexPath = workoutTableView.indexPathForRow(at: swipedAtRow) {
             print("Swiped on cell at section \(indexPath.section), row \(indexPath.row)")
         }
     }
     
     @objc func handleLongPressGesture(sender: UISwipeGestureRecognizer) {
-        // Get location of swipe
-        let location = sender.location(in: workoutTableView)
-        
-        // Get indexPath of cell at swipe location
-        if let indexPath = workoutTableView.indexPathForRow(at: location) {
-            // Perform actions based on indexPath
+        let longPressedAtRow = sender.location(in: workoutTableView)
+        if let indexPath = workoutTableView.indexPathForRow(at: longPressedAtRow) {
             print("Long pressed on cell at section \(indexPath.section), row \(indexPath.row)")
         }
     }
@@ -67,6 +59,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let workout = workouts[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! SingleRepCell
+        cell.viewController = self
         cell.workoutName.text = workout.workoutName
         cell.workoutWeight.text = String(workout.workoutWeight) + " lbs"
         return cell
@@ -74,9 +67,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? SingleRepCell {
+            //cell.workoutNameCellTapped()
             if (cell.markedDone) {
-                cell.workoutNameCell.backgroundColor = UIColor.gray
-                cell.workoutDetailCell.backgroundColor = UIColor.gray
+                cell.workoutNameCell.backgroundColor = UIColor.lightGray
+                cell.workoutDetailCell.backgroundColor = UIColor.lightGray
                 cell.markedDone = false
             }
             else {
