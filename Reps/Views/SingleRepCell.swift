@@ -20,17 +20,19 @@ class SingleRepCell: UITableViewCell, UITextFieldDelegate {
     
     var viewController: ViewController?
     
+    var contextMenuInteraction: UIContextMenuInteraction?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         workoutTextField.delegate = self
         workoutTextField.isHidden = true
         workoutName.isUserInteractionEnabled = true
-        let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(workoutNameCellTapped))
-        workoutNameCell.addGestureRecognizer(tapGesture)
+        //let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(workoutNameCellLongPress))
+        //workoutNameCell.addGestureRecognizer(longPressGesture)
         workoutTextField.backgroundColor = .clear
     }
     
-    @objc func workoutNameCellTapped() {
+    @objc func enableWorkoutNameEdit() {
         workoutName.isHidden = true
         workoutTextField.isHidden = false
         //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissEditing))
@@ -39,25 +41,13 @@ class SingleRepCell: UITableViewCell, UITextFieldDelegate {
         workoutTextField.text = workoutName.text
     }
     
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        textField.resignFirstResponder()
-//        workoutTextField.isHidden = true
-//        workoutName.isHidden = false
-//        workoutName.text = workoutTextField.text
-//        workoutTextField.endEditing(true)
-//        return true
-//    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         workoutTextField.isHidden = true
         workoutName.isHidden = false
         workoutName.text = workoutTextField.text
-
-        // Find the corresponding Workout object in the viewController's workouts array
-        if let viewController = self.viewController as? ViewController,
-           let indexPath = viewController.workoutTableView.indexPath(for: self) {
-            viewController.workouts[indexPath.row].workoutName = workoutTextField.text ?? ""
+        if let indexPath = viewController?.workoutTableView.indexPath(for: self) {
+            viewController?.workouts[indexPath.row].workoutName = workoutTextField.text ?? ""
         }
         workoutTextField.endEditing(true)
         return true
