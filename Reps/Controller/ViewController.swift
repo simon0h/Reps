@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var workoutTableView: UITableView!
+    @IBOutlet weak var addNewButton: UIButton!
     
     var workouts: [Workout] = [Workout(workoutName: "Dumbbell bench press", workoutWeight: 15), Workout(workoutName: "Dumbbell fly", workoutWeight: 15)]
 
@@ -24,12 +25,18 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
-        let newWorkout = Workout(workoutName: "test", workoutWeight: 20)
-        workouts.append(newWorkout)
-        DispatchQueue.main.async {
-            self.workoutTableView.reloadData()
-            let indexPath = IndexPath(row: self.workouts.count - 1, section: 0)
-            self.workoutTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        if (workoutTableView.isEditing) {
+            workoutTableView.isEditing = false
+            addNewButton.setTitle("Add New", for: .normal)
+        }
+        else {
+            let newWorkout = Workout(workoutName: "test", workoutWeight: 20)
+            workouts.append(newWorkout)
+            DispatchQueue.main.async {
+                self.workoutTableView.reloadData()
+                let indexPath = IndexPath(row: self.workouts.count - 1, section: 0)
+                self.workoutTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            }
         }
     }
     
@@ -55,7 +62,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.addInteraction(cell.contextMenuInteraction!) // Adding tap and hold gesture to SingleRepCell
         // Because the delegate is self (aka this ViewController object), when contextMenuInteraction is called, delegate method contextMenuInteraction from this class is called
         cell.workoutName.text = workout.workoutName
-        cell.workoutWeight.text = String(workout.workoutWeight) + " lbs"
+        cell.workoutWeight.text = String(workout.workoutWeight)
         return cell
     }
     
@@ -88,6 +95,24 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedWorkout = workouts[sourceIndexPath.row]
+        workouts.remove(at: sourceIndexPath.row)
+        workouts.insert(movedWorkout, at: destinationIndexPath.row)
+    }
 }
 
 extension ViewController: UIContextMenuInteractionDelegate {
@@ -98,19 +123,25 @@ extension ViewController: UIContextMenuInteractionDelegate {
         guard let indexPath = workoutTableView.indexPath(for: cell) else {
             return nil
         }
-
         let workout = workouts[indexPath.row]
         let identifier = "\(indexPath.row)" as NSString
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
-            let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil")) { _ in
+            let reorderAction = UIAction(title: "Reorder", image: UIImage(systemName: "arrow.up.arrow.down")) { _ in
+                self.workoutTableView.isEditing = true
+                self.addNewButton.setTitle("Done", for: .normal)
+            }
+            let editWorkoutAction = UIAction(title: "Edit Workout Name", image: UIImage(systemName: "character.bubble.fill")) { _ in
                 cell.enableWorkoutNameEdit()
-                print("Edit action for \(workout.workoutName)")
+            }
+            let editWeightAction = UIAction(title: "Edit Workout Weight", image: UIImage(systemName: "dumbbell.fill")) { _ in
+                cell.enableWorkoutWeightEdit()
             }
             let deleteAction = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
                 self.workouts.remove(at: indexPath.row)
                 self.workoutTableView.deleteRows(at: [indexPath], with: .automatic)
             }
-            return UIMenu(title: "", children: [editAction, deleteAction])
+            let divider = UIMenu(title: "", options: .displayInline, children: [reorderAction, editWorkoutAction, editWeightAction])
+            return UIMenu(title: "", children: [divider, deleteAction])
         }
     }
     

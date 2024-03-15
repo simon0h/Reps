@@ -31,11 +31,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z8p-YO-0VQ">
-                                        <rect key="frame" x="8" y="8" width="312" height="34"/>
+                                        <rect key="frame" x="8" y="7" width="312" height="43"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -57,8 +56,21 @@
                                             <constraint firstAttribute="width" constant="20.670000000000002" id="tTb-uj-RsF"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weights" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20x-sm-6OW">
-                                        <rect key="frame" x="36" y="7" width="55.666666666666657" height="18"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weights" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20x-sm-6OW">
+                                        <rect key="frame" x="36" y="7" width="57.333333333333343" height="18"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lew-Pv-Dmk" userLabel="Weight Text Field">
+                                        <rect key="frame" x="36" y="-1" width="97" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="lbs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PcK-Do-hhI">
+                                        <rect key="frame" x="101" y="7" width="21.333333333333343" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -70,7 +82,6 @@
                                     <constraint firstItem="6Pr-3E-385" firstAttribute="top" secondItem="sIp-Q3-jfK" secondAttribute="top" constant="6" id="6k3-3m-YjB"/>
                                     <constraint firstItem="20x-sm-6OW" firstAttribute="leading" secondItem="6Pr-3E-385" secondAttribute="trailing" constant="7.3300000000000001" id="7t8-MW-1Ip"/>
                                     <constraint firstAttribute="width" constant="328" id="L8L-WO-ihS"/>
-                                    <constraint firstAttribute="trailing" secondItem="20x-sm-6OW" secondAttribute="trailing" constant="236.33000000000001" id="dPd-3C-UyG"/>
                                     <constraint firstAttribute="bottom" secondItem="6Pr-3E-385" secondAttribute="bottom" constant="23.670000000000002" id="djb-bQ-kz0"/>
                                     <constraint firstItem="20x-sm-6OW" firstAttribute="top" secondItem="sIp-Q3-jfK" secondAttribute="top" constant="7" id="gDJ-WW-owX"/>
                                     <constraint firstItem="20x-sm-6OW" firstAttribute="leading" secondItem="6Pr-3E-385" secondAttribute="trailing" constant="7.3300000000000001" id="gvv-4c-nSP"/>
@@ -100,7 +111,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="lbsLabel" destination="PcK-Do-hhI" id="cJB-9K-dD2"/>
                 <outlet property="weightImageView" destination="6Pr-3E-385" id="3wl-Lb-8Ax"/>
+                <outlet property="weightTextField" destination="Lew-Pv-Dmk" id="FLa-VW-l8w"/>
                 <outlet property="workoutDetailCell" destination="sIp-Q3-jfK" id="n4G-zN-Yaj"/>
                 <outlet property="workoutName" destination="U3E-Oq-Cxh" id="c3W-ma-DI7"/>
                 <outlet property="workoutNameCell" destination="oYK-8t-r4a" id="VZC-oq-rwT"/>
