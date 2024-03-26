@@ -6,13 +6,16 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
     
     @IBOutlet weak var workoutTableView: UITableView!
     @IBOutlet weak var addNewButton: UIButton!
     
-    var workouts: [Workout] = [Workout(workoutName: "Dumbbell bench press", workoutWeight: 15), Workout(workoutName: "Dumbbell fly", workoutWeight: 15)]
+    var workouts: [WorkoutEntity] = []//[Workout(workoutName: "Dumbbell bench press", workoutWeight: 15), Workout(workoutName: "Dumbbell fly", workoutWeight: 15)]
+    var managedContext: NSManagedObjectContext!
+    var entity: NSEntityDescription!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +25,10 @@ class ViewController: UIViewController {
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
         swipeGesture.direction = .left
         workoutTableView.addGestureRecognizer(swipeGesture)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        managedContext = appDelegate.persistentContainer.viewContext
+        entity = NSEntityDescription.entity(forEntityName: "WorkoutEntity", in: managedContext)!
+        fetchWorkouts()
     }
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
@@ -30,8 +37,11 @@ class ViewController: UIViewController {
             addNewButton.setTitle("Add New", for: .normal)
         }
         else {
-            let newWorkout = Workout(workoutName: "test", workoutWeight: 20)
+            let newWorkout = WorkoutEntity(context: managedContext)
+            newWorkout.workoutName = "test"
+            newWorkout.workoutWeight = 20
             workouts.append(newWorkout)
+            saveContext()
             DispatchQueue.main.async {
                 self.workoutTableView.reloadData()
                 let indexPath = IndexPath(row: self.workouts.count - 1, section: 0)
@@ -44,6 +54,23 @@ class ViewController: UIViewController {
         let swipedAtRow = sender.location(in: workoutTableView)
         if let indexPath = workoutTableView.indexPathForRow(at: swipedAtRow) {
             print("Swiped on cell at section \(indexPath.section), row \(indexPath.row)")
+        }
+    }
+    
+    func fetchWorkouts() {
+        let fetchRequest: NSFetchRequest<WorkoutEntity> = WorkoutEntity.fetchRequest()
+        do {
+            workouts = try managedContext.fetch(fetchRequest)
+        } catch {
+            print("Failed to fetch workouts: \(error)")
+        }
+    }
+    
+    func saveContext() {
+        do {
+            try managedContext.save()
+        } catch {
+            print("Failed to save context: \(error)")
         }
     }
 }
@@ -87,7 +114,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
+            let workout = workouts[indexPath.row]
+            managedContext.delete(workout)
             workouts.remove(at: indexPath.row)
+            saveContext()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
             DispatchQueue.main.async {
                 self.workoutTableView.reloadData()
                 let indexPath = IndexPath(row: self.workouts.count - 1, section: 0)

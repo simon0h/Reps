@@ -65,7 +65,7 @@ class SingleRepCell: UITableViewCell, UITextFieldDelegate {
             workoutName.isHidden = false
             workoutName.text = workoutTextField.text
             if let indexPath = viewController?.workoutTableView.indexPath(for: self) {
-                viewController?.workouts[indexPath.row].workoutName = workoutTextField.text ?? ""
+                //viewController?.workouts[indexPath.row].workoutName = workoutTextField.text ?? ""
             }
             workoutTextField.endEditing(true)
         }
@@ -75,7 +75,7 @@ class SingleRepCell: UITableViewCell, UITextFieldDelegate {
             workoutWeight.text = weightTextField.text
             if let indexPath = viewController?.workoutTableView.indexPath(for: self) {
                 let tempWeight = weightTextField.text ?? ""
-                viewController?.workouts[indexPath.row].workoutWeight = Int(tempWeight) ?? 0
+                //viewController?.workouts[indexPath.row].workoutWeight = Int(tempWeight) ?? 0
             }
             weightTextField.endEditing(true)
         }
