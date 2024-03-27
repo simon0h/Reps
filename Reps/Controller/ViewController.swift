@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var workoutTableView: UITableView!
     @IBOutlet weak var addNewButton: UIButton!
     
-    var workouts: [WorkoutEntity] = []//[Workout(workoutName: "Dumbbell bench press", workoutWeight: 15), Workout(workoutName: "Dumbbell fly", workoutWeight: 15)]
+    var workouts: [WorkoutEntity] = []
     var managedContext: NSManagedObjectContext!
     var entity: NSEntityDescription!
 
@@ -29,6 +29,25 @@ class ViewController: UIViewController {
         managedContext = appDelegate.persistentContainer.viewContext
         entity = NSEntityDescription.entity(forEntityName: "WorkoutEntity", in: managedContext)!
         fetchWorkouts()
+    }
+    
+    func fetchWorkouts() {
+        let fetchRequest: NSFetchRequest<WorkoutEntity> = WorkoutEntity.fetchRequest()
+        do {
+            workouts = try managedContext.fetch(fetchRequest)
+        }
+        catch {
+            print("Failed to fetch workouts: \(error)")
+        }
+    }
+    
+    func saveContext() {
+        do {
+            try managedContext.save()
+        }
+        catch {
+            print("Failed to save context: \(error)")
+        }
     }
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
@@ -56,23 +75,6 @@ class ViewController: UIViewController {
             print("Swiped on cell at section \(indexPath.section), row \(indexPath.row)")
         }
     }
-    
-    func fetchWorkouts() {
-        let fetchRequest: NSFetchRequest<WorkoutEntity> = WorkoutEntity.fetchRequest()
-        do {
-            workouts = try managedContext.fetch(fetchRequest)
-        } catch {
-            print("Failed to fetch workouts: \(error)")
-        }
-    }
-    
-    func saveContext() {
-        do {
-            try managedContext.save()
-        } catch {
-            print("Failed to save context: \(error)")
-        }
-    }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -84,6 +86,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let workout = workouts[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! SingleRepCell
+        cell.workout = workout
         cell.viewController = self
         cell.contextMenuInteraction = UIContextMenuInteraction(delegate: self) // Adding contextMenu class to SingleRepCell
         cell.addInteraction(cell.contextMenuInteraction!) // Adding tap and hold gesture to SingleRepCell
@@ -154,7 +157,6 @@ extension ViewController: UIContextMenuInteractionDelegate {
         guard let indexPath = workoutTableView.indexPath(for: cell) else {
             return nil
         }
-        let workout = workouts[indexPath.row]
         let identifier = "\(indexPath.row)" as NSString
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
             let reorderAction = UIAction(title: "Reorder", image: UIImage(systemName: "arrow.up.arrow.down")) { _ in
