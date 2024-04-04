@@ -22,9 +22,9 @@ class ViewController: UIViewController {
         workoutTableView.delegate = self
         workoutTableView.dataSource = self
         workoutTableView.register(UINib(nibName: Constants.cellIdentifier, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
-        swipeGesture.direction = .left
-        workoutTableView.addGestureRecognizer(swipeGesture)
+        //let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
+        //swipeGesture.direction = .left
+        //workoutTableView.addGestureRecognizer(swipeGesture)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         managedContext = appDelegate.persistentContainer.viewContext
         entity = NSEntityDescription.entity(forEntityName: "WorkoutEntity", in: managedContext)!
@@ -33,6 +33,8 @@ class ViewController: UIViewController {
     
     func fetchWorkouts() {
         let fetchRequest: NSFetchRequest<WorkoutEntity> = WorkoutEntity.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "order", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
         do {
             workouts = try managedContext.fetch(fetchRequest)
         }
@@ -59,6 +61,7 @@ class ViewController: UIViewController {
             let newWorkout = WorkoutEntity(context: managedContext)
             newWorkout.workoutName = "test"
             newWorkout.workoutWeight = 20
+            newWorkout.order = Int16(workouts.count)
             workouts.append(newWorkout)
             saveContext()
             DispatchQueue.main.async {
@@ -69,12 +72,12 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
-        let swipedAtRow = sender.location(in: workoutTableView)
-        if let indexPath = workoutTableView.indexPathForRow(at: swipedAtRow) {
-            print("Swiped on cell at section \(indexPath.section), row \(indexPath.row)")
-        }
-    }
+//    @objc func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
+//        let swipedAtRow = sender.location(in: workoutTableView)
+//        if let indexPath = workoutTableView.indexPathForRow(at: swipedAtRow) {
+//            print("Swiped on cell at section \(indexPath.section), row \(indexPath.row)")
+//        }
+//    }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -146,6 +149,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let movedWorkout = workouts[sourceIndexPath.row]
         workouts.remove(at: sourceIndexPath.row)
         workouts.insert(movedWorkout, at: destinationIndexPath.row)
+        for (index, workout) in workouts.enumerated() {
+            workout.order = Int16(index)
+        }
+        saveContext()
     }
 }
 
@@ -179,6 +186,6 @@ extension ViewController: UIContextMenuInteractionDelegate {
     }
     
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
-        // No preview action in this example
+        
     }
 }

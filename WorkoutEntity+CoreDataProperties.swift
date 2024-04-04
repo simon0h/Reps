@@ -18,6 +18,7 @@ extension WorkoutEntity {
 
     @NSManaged public var workoutName: String?
     @NSManaged public var workoutWeight: Int16
+    @NSManaged public var order: Int16
 
 }
 
