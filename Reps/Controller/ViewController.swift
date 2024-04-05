@@ -22,9 +22,6 @@ class ViewController: UIViewController {
         workoutTableView.delegate = self
         workoutTableView.dataSource = self
         workoutTableView.register(UINib(nibName: Constants.cellIdentifier, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
-        //let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
-        //swipeGesture.direction = .left
-        //workoutTableView.addGestureRecognizer(swipeGesture)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         managedContext = appDelegate.persistentContainer.viewContext
         entity = NSEntityDescription.entity(forEntityName: "WorkoutEntity", in: managedContext)!
@@ -34,7 +31,7 @@ class ViewController: UIViewController {
     func fetchWorkouts() {
         let fetchRequest: NSFetchRequest<WorkoutEntity> = WorkoutEntity.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "order", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
+        fetchRequest.sortDescriptors = [sortDescriptor] // Uses an array because more than one sortDescriptions can be used
         do {
             workouts = try managedContext.fetch(fetchRequest)
         }
@@ -71,13 +68,6 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-//    @objc func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
-//        let swipedAtRow = sender.location(in: workoutTableView)
-//        if let indexPath = workoutTableView.indexPathForRow(at: swipedAtRow) {
-//            print("Swiped on cell at section \(indexPath.section), row \(indexPath.row)")
-//        }
-//    }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -121,20 +111,20 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let workout = workouts[indexPath.row]
-            managedContext.delete(workout)
             workouts.remove(at: indexPath.row)
+            managedContext.delete(workout)
             saveContext()
             tableView.deleteRows(at: [indexPath], with: .automatic)
             DispatchQueue.main.async {
                 self.workoutTableView.reloadData()
-                let indexPath = IndexPath(row: self.workouts.count - 1, section: 0)
-                self.workoutTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                //let indexPath = IndexPath(row: self.workouts.count - 1, section: 0)
+                //self.workoutTableView.scrollToRow(at: indexPath, at: .top, animated: true)
             }
         }
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .none
+        return .delete
     }
 
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
@@ -176,12 +166,8 @@ extension ViewController: UIContextMenuInteractionDelegate {
             let editWeightAction = UIAction(title: "Edit Workout Weight", image: UIImage(systemName: "dumbbell.fill")) { _ in
                 cell.enableWorkoutWeightEdit()
             }
-            let deleteAction = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
-                self.workouts.remove(at: indexPath.row)
-                self.workoutTableView.deleteRows(at: [indexPath], with: .automatic)
-            }
             let divider = UIMenu(title: "", options: .displayInline, children: [reorderAction, editWorkoutAction, editWeightAction])
-            return UIMenu(title: "", children: [divider, deleteAction])
+            return UIMenu(title: "", children: [divider])
         }
     }
     
