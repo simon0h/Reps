@@ -56,8 +56,8 @@ class ViewController: UIViewController {
         }
         else {
             let newWorkout = WorkoutEntity(context: managedContext)
-            newWorkout.workoutName = "test"
-            newWorkout.workoutWeight = 20
+            newWorkout.workoutName = "Long press to edit"
+            newWorkout.workoutWeight = 0
             newWorkout.order = Int16(workouts.count)
             workouts.append(newWorkout)
             saveContext()
@@ -86,21 +86,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         // Because the delegate is self (aka this ViewController object), when contextMenuInteraction is called, delegate method contextMenuInteraction from this class is called
         cell.workoutName.text = workout.workoutName
         cell.workoutWeight.text = String(workout.workoutWeight)
+        if (!workout.doneness) {
+            cell.workoutNameCell.backgroundColor = UIColor.lightGray
+            cell.workoutDetailCell.backgroundColor = UIColor.lightGray
+        }
+        else {
+            cell.workoutNameCell.backgroundColor = UIColor.green
+            cell.workoutDetailCell.backgroundColor = UIColor.green
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? SingleRepCell {
-            if (cell.markedDone) {
-                cell.workoutNameCell.backgroundColor = UIColor.lightGray
-                cell.workoutDetailCell.backgroundColor = UIColor.lightGray
-                cell.markedDone = false
-            }
-            else {
-                cell.workoutNameCell.backgroundColor = UIColor.green
-                cell.workoutDetailCell.backgroundColor = UIColor.green
-                cell.markedDone = true
-            }
+            //let workout = workouts[indexPath.row]
+            cell.changeDoneness()
         }
     }
     

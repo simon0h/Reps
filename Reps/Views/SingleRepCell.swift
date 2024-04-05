@@ -19,8 +19,6 @@ class SingleRepCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var lbsLabel: UILabel!
     
-    var markedDone = false
-    
     var viewController: ViewController?
     
     var contextMenuInteraction: UIContextMenuInteraction?
@@ -51,6 +49,21 @@ class SingleRepCell: UITableViewCell, UITextFieldDelegate {
         } 
         catch {
             print("Failed to save context: \(error)")
+        }
+    }
+    
+    @objc func changeDoneness() {
+        if let workout = workout {
+            workout.doneness = !workout.doneness
+            if (workout.doneness) {
+                workoutNameCell.backgroundColor = UIColor.green
+                workoutDetailCell.backgroundColor = UIColor.green
+            }
+            else {
+                workoutNameCell.backgroundColor = UIColor.lightGray
+                workoutDetailCell.backgroundColor = UIColor.lightGray
+            }
+            saveContext()
         }
     }
     
@@ -141,7 +154,6 @@ class SingleRepCell: UITableViewCell, UITextFieldDelegate {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
 }
 
 extension UITextField{
